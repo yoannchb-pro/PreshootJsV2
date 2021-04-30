@@ -29,6 +29,7 @@ Config preshoot.js
         },
         className: "user-going-on"
     }, {
+        mobile: true, //Look on mobile
         detectWithArea: false, //If the cursor is not going on an object preshoot.js will detect the closer object
         mouseInterval: 30, //The calcul will be make each 30 mouse move loop
         resetClass: true, //Reset all the class if there are no matching element anymore
