@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <title>PreshootJs || easy to preshoot where the user is going</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- CONFIG -->
+    <script type="text/javascript" src="./lib/preshootv2.js"></script>
+    <style>
+        .preshoot {
+            border: 5px solid red!important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- PRESENTATION -->
+    <div class="container">
+        <div class="container-header">
+            <h1 preshoot-area>Preshoot.js</h1>
+            <p preshoot-area>Preshoot.js is a library inspired from <a href="https://mathisonian.github.io/premonish">premonish</a> to predict on each object the user is going to execute a function or to change the class of the object.</p>
+            <button preshoot-area>
+                <a href="https://github.com/yoannchb-pro/Preshoot.js">Github</a>
+            </button>
+        </div>
+        <div class="container-content">
+            <div class="boutton-container">
+                <button class="prc">Distance (%) : null</button>
+                <button preshoot-area>Normal</button>
+                <button preshoot-area>Normal</button>
+                <button class="calc">Distance (px) : null</button>
+            </div>
+
+            <textarea class="code" preshoot-area>
+<script>
+    const preshoot = new Preshoot(["#watchMe", ".watchMe"], {
+        fn: (event) => {
+            console.log(event);
+        },
+        exitFn: (event) => {
+            console.log(event);
+        },
+        className: "user-going-on"
+    }, {
+        detectWithArea: false, //If the cursor is not going on an object preshoot.js will detect the closer object
+        mouseInterval: 30, //The calcul will be make each 30 mouse move loop
+        resetClass: true, //Reset all the class if there are no matching element anymore
+        //Function to display when there is an error while executing the function of an object
+        onError: (el, msg) => {
+            console.warn("Error during executing function ", {
+                error: true,
+                element: el,
+                message: msg
+            });
+        }
+    });
+
+    //Debug mode
+    Preshoot.debugMode(preshoot);
+
+    //Start observing
+    preshoot.start();
+
+    //Stop observing
+    preshoot.stop();
+</script>
+
+<style>
+    /* Default class when matching */
+    .preshoot{
+        border: 5px solid red!important;
+    }
+</style>
+
+
+<!-- Watching -->
+<div id="watchMe"></div>
+<div class="watchMe"></div>
+
+            </textarea>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    //Common preshoot
+    const preshoot = new Preshoot(["[preshoot-area]", ".calc", ".prc"], {
+        fn: (event) => {
+            const el = event.element;
+            if (el.className == "calc") el.textContent = "Distance (px) : " + Math.round(event.distance);
+            if (el.className == "prc") el.textContent = "Distance (%) : " + Math.round(event.pourcentage);
+        },
+        exitFn: (event) => {
+            const el = event.element;
+            if (el.className == "calc") el.textContent = "Element not selected";
+        },
+        className: "preshoot"
+    }, {
+        resetClass: false
+    });
+    Preshoot.debugMode(preshoot);
+    preshoot.start();
+</script>
+
+</html>
